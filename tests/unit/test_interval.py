@@ -70,7 +70,31 @@ def test_update_years():
     date_2 = Date("2025-04-06")
     interval = Interval(date_1, date_2)
     date_1.remove_years(5)
-    print(date_1.year)
-    print(date_1.month)
-    print(date_1.day)
     assert interval.get_dates_interval() == 1826
+
+
+def test_check_years():
+    date_1 = Date("2020-04-06")
+    date_2 = Date("2030-04-06")
+    interval = Interval(date_1, date_2)
+    date_1.add_years(5)
+    date_2.remove_years(5)
+    assert interval.get_dates_interval() == 0
+
+
+def test_check_months():
+    date_1 = Date("2025-04-06")
+    date_2 = Date("2025-04-06")
+    interval = Interval(date_1, date_2)
+    date_1.remove_months(5)
+    date_1.add_months(5)
+    assert interval.get_dates_interval() == 0
+
+
+def test_check_days():
+    date_1 = Date("2025-04-06")
+    date_2 = Date("2025-04-06")
+    interval = Interval(date_1, date_2)
+    date_1.add_days(30)
+    date_1.remove_days(30)
+    assert interval.get_dates_interval() == 0
