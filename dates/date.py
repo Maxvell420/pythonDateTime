@@ -88,6 +88,17 @@ class Date:
             cur_month_days = self._get_month_days(self.month, is_high_year)
             point_days += cur_month_days
         self.day -= days
+        self._calc_zero_day()
+
+    def _calc_zero_day(self):
+        if not (self.day):
+            if self.month == 1:
+                self.month = 12
+                self.year -= 1
+            self.month -= 1
+            is_high_year = self._is_high_year(self.year)
+            days = self._get_month_days(self.month, is_high_year)
+            self.day = days
 
     def get_cur_point(self) -> int:
         return self.point
@@ -141,5 +152,5 @@ class Date:
     def _validate_day(self, month: int, days: int, high_year: bool) -> None:
         cur_month_days = self._get_month_days(month=month, high_year=high_year)
 
-        if not (0 < days < cur_month_days):
+        if not (0 < days <= cur_month_days):
             raise ValueError("День не входит в допустимые границы")
